@@ -21,7 +21,6 @@ class BirdsController < ApplicationController
   # end
   #Refactored create#method
   def create
-    # create! exceptions will be handled by the rescue_from ActiveRecord::RecordInvalid code
     bird = Bird.create!(bird_params)
     render json: bird, status: :created
   end
@@ -42,6 +41,7 @@ class BirdsController < ApplicationController
   def update
     bird = find_bird
      # update! exceptions will be handled by the rescue_from ActiveRecord::RecordInvalid code
+
     bird.update!(bird_params)
     render json: bird
   end
@@ -67,7 +67,7 @@ class BirdsController < ApplicationController
     render json: { error: "Bird not found" }, status: :not_found
   end
   def render_unprocessable_entity_response(invalid)
-    render json: { errors: invalid.record.errors.full_messages }, status: :unprocessable_entity
+    render json: { errors: invalid.record.errors }, status: :unprocessable_entity
   end
 
 end
